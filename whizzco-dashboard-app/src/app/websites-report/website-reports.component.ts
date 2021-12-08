@@ -1,3 +1,4 @@
+import { DateRange } from './../shared/components/date-picker-filter/date-picker-filter.component';
 import {
   animate,
   state,
@@ -5,17 +6,11 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import {
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
+import { map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 
 import { WebReport } from './../models/website-report.model';
 import { WebsiteReportsService } from './services/website-reports.service';
@@ -48,12 +43,14 @@ export class WebsiteReportsComponent implements OnInit, OnDestroy {
   readonly websiteIDFilterName = 'WebsiteId Filter';
   readonly widgetIDFilterName = 'WidgetId Filter';
   private reportFilters: ReportFilters;
+  private datepickerFilterValue: Subject<DateRange>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private websiteReportsService: WebsiteReportsService) {
     this.destroy$ = new Subject<void>();
     this.dataSource = new MatTableDataSource<WebReport>();
+    this.datepickerFilterValue = new Subject<DateRange>();
   }
 
   ngOnInit(): void {
@@ -61,9 +58,20 @@ export class WebsiteReportsComponent implements OnInit, OnDestroy {
 
     this.initFilterPredicate();
 
-    this.websiteReportsService
-      .getAllReports()
-      .pipe(takeUntil(this.destroy$))
+    this.datepickerFilterValue
+      .asObservable()
+      .pipe(
+        startWith(of(null)),
+        switchMap((datepickerFilterValue: DateRange) =>
+          datepickerFilterValue
+            ? this.websiteReportsService.getReportsByDateFilter(
+                datepickerFilterValue.from,
+                datepickerFilterValue.to
+              )
+            : this.websiteReportsService.getAllReports()
+        ),
+        takeUntil(this.destroy$)
+      )
       .subscribe((webReports: WebReport[]) => {
         this.dataSource.data = webReports;
         this.dataSource.paginator = this.paginator;
@@ -90,6 +98,10 @@ export class WebsiteReportsComponent implements OnInit, OnDestroy {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  onDatepickerFilterChange(datepickerRange: DateRange) {
+    this.datepickerFilterValue.next(datepickerRange);
   }
 
   private initFilterPredicate() {
