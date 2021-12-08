@@ -3,7 +3,7 @@ import { websiteReports } from '..';
 
 
 const getReportByDate: (fromDate: number, toDate: number) => WebReport[] = (fromDate, toDate) => websiteReports.filter(websiteReport  => {
-    const websiteTimeStamp = new Date(websiteReport.Date).getTime();
+    const websiteTimeStamp = new Date(websiteReport.date).getTime();
     return fromDate <= websiteTimeStamp && websiteTimeStamp <= toDate;
 });
 

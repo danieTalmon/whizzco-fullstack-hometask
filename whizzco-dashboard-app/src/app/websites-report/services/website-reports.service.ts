@@ -13,7 +13,7 @@ export class WebsiteReportsService {
   getAllReports(): Observable<WebReport[]> {
     return this.http.get<WebReport[]>(`${this.baseURL}/allData`).pipe(
       catchError((e) => {
-        console.error(`${this.baseURL}/getAllData response error: ${e}`);
+        console.error(`${this.baseURL}/getAllData response error: ${JSON.stringify(e)}`);
         return of(null);
       })
     );
@@ -26,9 +26,9 @@ export class WebsiteReportsService {
     return this.http
       .get<WebReport[]>(`${this.baseURL}/${fromDate}/${toDate}`)
       .pipe(
-        catchError((e) => {
+        catchError((e: any) => {
           console.error(
-            `${this.baseURL}/${fromDate}/${toDate} response error: ${e}`
+            `${this.baseURL}/${fromDate}/${toDate} response error: ${JSON.stringify(e)}`
           );
           return of(null);
         })

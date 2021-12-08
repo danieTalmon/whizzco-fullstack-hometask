@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-date-picker-filter',
@@ -7,7 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DatePickerFilterComponent implements OnInit {
 
-  constructor() { }
+  range: FormGroup;
+
+  constructor() {
+    this.range =  new FormGroup({
+      start: new FormControl(),
+      end: new FormControl(),
+    });
+  }
 
   ngOnInit(): void {
   }

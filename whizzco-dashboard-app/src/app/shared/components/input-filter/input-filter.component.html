@@ -1,1 +1,7 @@
-<p>input-filter works!</p>
+<mat-form-field appearance="fill">
+  <mat-label>{{ filterName }}</mat-label>
+  <textarea
+    matInput
+    placeholder="enter a filter"
+    (input)="onFilterChange($event.target.value)"></textarea>
+</mat-form-field>

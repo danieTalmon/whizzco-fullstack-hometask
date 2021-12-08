@@ -1,15 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-input-filter',
   templateUrl: './input-filter.component.html',
-  styleUrls: ['./input-filter.component.less']
+  styleUrls: ['./input-filter.component.less'],
 })
 export class InputFilterComponent implements OnInit {
+  @Input()
+  filterName: string;
 
-  constructor() { }
+  @Output()
+  filterChange: EventEmitter<string>;
 
-  ngOnInit(): void {
+  constructor() {
+    this.filterChange = new EventEmitter<string>();
   }
 
+  ngOnInit(): void {}
+
+  onFilterChange(input: string) {
+    this.filterChange.emit(input);
+  }
 }

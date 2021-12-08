@@ -1,10 +1,16 @@
 table {
-  width: 80%;
+  width: 100%;
+}
+
+.filters-section {
+display: flex;
+gap: 10%;
 }
 
 .report-detail {
   overflow: hidden;
   display: flex;
+  flex-direction: column;
 }
 
 tr.report-detail-row {
@@ -23,16 +29,9 @@ tr.report-row:not(.report-expanded-row):active {
   border-bottom-width: 0;
 }
 
-.example-element-symbol {
-  font-weight: bold;
-  font-size: 40px;
-  line-height: normal;
-}
 
-.example-element-description {
-  padding: 16px;
-}
-
-.example-element-description-attribution {
-  opacity: 0.5;
+.report-details-field {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
 }

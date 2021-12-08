@@ -1,3 +1,4 @@
+import { SharedModule } from './../shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WebsiteReportsService } from './services/website-reports.service';
 import { NgModule } from '@angular/core';
@@ -15,6 +16,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatTableModule,
     ScrollingModule,
     MatPaginatorModule,
+    SharedModule,
     BrowserAnimationsModule,
     HttpClientModule,
   ],

@@ -1,33 +1,69 @@
-<table mat-table
-       [dataSource]="dataSource" multiTemplateDataRows
-       class="mat-elevation-z8">
-  <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
-    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
-  </ng-container>
 
-  <ng-container matColumnDef="expandedDetail">
-    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-      <div class="report-detail"
-           [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-        <div class="field">
-          <label >Clicks:</label>
-          <h3>{{element.clicks}}</h3>
+<div class="filters-section">
+  <app-input-filter
+  [filterName] = "websiteIDFilterName"
+  (filterChange) = "onWebsiteIdFilterChange($event)"></app-input-filter>
+  <app-input-filter
+   [filterName] = "websiteIDFilterName"
+   (filterChange) = "onWidgetIdFilterChange($event)"></app-input-filter>
+</div>
+<div class="mat-elevation-z8">
+  <table
+    *ngIf="dataSource.data.length > 0"
+    mat-table
+    [dataSource]="dataSource"
+    multiTemplateDataRows
+  >
+    <ng-container
+      matColumnDef="{{ column }}"
+      *ngFor="let column of columnsToDisplay">
+      <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+      <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+      <td
+        mat-cell
+        *matCellDef="let element"
+        [attr.colspan]="columnsToDisplay.length">
+        <div
+          class="report-detail"
+          [@detailExpand]="
+            element == expandedElement ? 'expanded' : 'collapsed'">
+          <div class="report-details-field">
+            <label>Clicks:</label>
+            <div>{{ element.clicks }}</div>
+          </div>
+          <div class="report-details-field">
+            <label>Impressions:</label>
+            <div>{{ element.impressions }}</div>
+          </div>
+          <div class="report-details-field">
+            <label>Revenue:</label>
+            <div>{{ element.revenue }}</div>
+          </div>
         </div>
-        <div class="field"></div>
-      </div>
-    </td>
-  </ng-container>
+      </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr
+      mat-row
+      *matRowDef="let element; columns: columnsToDisplay"
       class="report-row"
       [class.report-expanded-row]="expandedElement === element"
-      (click)="expandedElement = expandedElement === element ? null : element">
-  </tr>
-  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="report-detail-row"></tr>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                 showFirstLastButtons
-                 aria-label="Select page of periodic elements">
+      (click)="expandedElement = expandedElement === element ? null : element"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: ['expandedDetail']"
+      class="report-detail-row"
+    ></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[10, 5, 20, 30, 50]"
+    aria-label="Select page of periodic elements"
+  >
   </mat-paginator>
-</table>
+</div>

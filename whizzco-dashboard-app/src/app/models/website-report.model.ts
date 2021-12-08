@@ -1,8 +1,8 @@
 export interface WebReport {
-  'Website ID': number;
-  Date: Date;
-  'Widget ID': number;
-  Clicks: number;
-  Impressions: number;
-  Revenue: number;
+  websiteID: string;
+  date: Date;
+  widgetID: string;
+  clicks: number;
+  impressions: number;
+  revenue: number;
 }
