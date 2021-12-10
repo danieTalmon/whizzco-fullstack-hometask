@@ -9,8 +9,8 @@ import {
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { of, Subject } from 'rxjs';
-import { map, startWith, switchMap, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { startWith, switchMap, takeUntil } from 'rxjs/operators';
 
 import { WebReport } from './../models/website-report.model';
 import { WebsiteReportsService } from './services/website-reports.service';
@@ -61,7 +61,7 @@ export class WebsiteReportsComponent implements OnInit, OnDestroy {
     this.datepickerFilterValue
       .asObservable()
       .pipe(
-        startWith(of(null)),
+        startWith(null),
         switchMap((datepickerFilterValue: DateRange) =>
           datepickerFilterValue
             ? this.websiteReportsService.getReportsByDateFilter(
@@ -75,6 +75,9 @@ export class WebsiteReportsComponent implements OnInit, OnDestroy {
       .subscribe((webReports: WebReport[]) => {
         this.dataSource.data = webReports;
         this.dataSource.paginator = this.paginator;
+        if (this.dataSource.paginator) {
+          this.dataSource.paginator.firstPage();
+        }
       });
   }
 
