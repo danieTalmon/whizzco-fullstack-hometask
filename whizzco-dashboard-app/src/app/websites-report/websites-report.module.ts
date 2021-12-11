@@ -8,6 +8,7 @@ import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [WebsiteReportsComponent],
@@ -18,6 +19,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatPaginatorModule,
     SharedModule,
     BrowserAnimationsModule,
+    BrowserModule,
     HttpClientModule,
   ],
   providers: [WebsiteReportsService],

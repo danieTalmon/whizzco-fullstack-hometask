@@ -12,7 +12,7 @@
   ></app-date-picker-filter>
 </div>
 <div class="mat-elevation-z8">
-  <table
+    <table
     *ngIf="dataSource.data.length > 0"
     mat-table
     [dataSource]="dataSource"
@@ -68,7 +68,6 @@
       class="report-detail-row"
     ></tr>
   </table>
-
   <mat-paginator
     [pageSizeOptions]="[10, 5, 20, 30, 50]"
     aria-label="Select page of periodic elements"
